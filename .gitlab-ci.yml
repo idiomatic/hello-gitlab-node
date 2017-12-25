@@ -31,7 +31,7 @@ staging:
   stage: staging
   image:
     name: anigeo/awscli
-    entrypoint: ["/bin/sh"]
+    entrypoint: ["/bin/sh", "-c"]
   environment:
     name: staging
     url: http://staging.example.com/
@@ -45,7 +45,7 @@ production:
   stage: deploy
   image:
     name: anigeo/awscli
-    entrypoint: ["/bin/sh"]
+    entrypoint: ["/bin/sh", "-c"]
   environment:
     name: production
     url: https://example.com/
