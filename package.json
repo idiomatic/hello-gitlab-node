@@ -1,5 +1,5 @@
 {
-  "main": "main.js",
+  "main": "app.js",
   "name": "hello-node",
   "description": "trivial node webserver on gitlab.com",
   "version": "0.0.1",
@@ -9,7 +9,7 @@
     "koa-static": "^4.0.0"
   },
   "scripts": {
-    "start": "node main.js",
+    "start": "node app.js",
     "test": "node test.js"
   }
 }
