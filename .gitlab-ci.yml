@@ -9,6 +9,8 @@ cache:
 
 stages:
   - test
+  - build
+  - staging
   - deploy
 
 test:
@@ -17,9 +19,35 @@ test:
     - npm install
     - npm test
 
-deploy:
-  stage: deploy
-  image: docker:dind
+build:
+  stage: build
+  image: docker:latest
   script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
+  only:
+    - master
+
+staging:
+  stage: staging
+  image: cgswong/aws:aws
+  environment:
+    name: staging
+    url: http://staging.example.com/
+  script:
+    - which aws || true
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  image: cgswong/aws:aws
+  environment:
+    name: production
+    url: https://example.com/
+  script:
+    - which aws || true
+  when: manual
+  only:
+    - master
