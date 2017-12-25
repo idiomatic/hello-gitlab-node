@@ -11,3 +11,11 @@ test:
   script:
    - npm install
    - npm test
+
+build:
+  script:
+    - echo create container
+
+deploy:
+  script:
+    - echo deploy to GCS or AWS-ECS-ACBAR
