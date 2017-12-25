@@ -15,7 +15,7 @@ test:
   stage: test
   script:
     - npm install
-    - npm start & sleep 1
+    - npm start &
     - npm test
 
 deploy:
