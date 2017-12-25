@@ -3,7 +3,8 @@
   "name": "hello-node",
   "description": "trivial node webserver on gitlab.com",
   "version": "0.0.1",
-  "licence": "MIT",
+  "license": "MIT",
+  "repository": "https://gitlab.com/rbrian/hello-node.git",
   "dependencies": {
     "koa": "^2.4.0",
     "koa-route": "^3.0.0",
