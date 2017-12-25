@@ -29,7 +29,7 @@ test:
 
 staging:
   stage: staging
-  image: cgswong/aws:aws
+  image: anigeo/awscli
   environment:
     name: staging
     url: http://staging.example.com/
@@ -43,7 +43,7 @@ staging:
 
 production:
   stage: deploy
-  image: cgswong/aws:aws
+  image: anigeo/awscli
   environment:
     name: production
     url: https://example.com/
