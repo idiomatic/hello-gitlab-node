@@ -1,12 +1,11 @@
-const http = require('http')
-
-http.get('http://localhost:8000', (resp) => {
-    let data = ''
-    resp.on('data', (chunk) => data += chunk)
-    resp.on('end', () => {
-        console.assert(data == "aloha\n", "wrong body")
-    })
-}).on("error", (err) => {
-    console.log(err)
-    console.assert(!err, "spurious error")
-})
+const test = require('koa-test')
+const app = require('./app')
+const scenario = test(() => app)
+scenario({
+    title: 'GET /',
+    path: '/',
+    method: 'get',
+    assertions: [
+        (res, t) => t.equal(res.status, 200),
+        (res, t) => t.equal(res.text, 'aloha\n')
+    ]})
