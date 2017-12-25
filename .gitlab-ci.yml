@@ -1,0 +1,21 @@
+image: node:latest
+
+services:
+  - redis:latest
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - test
+  - deploy
+
+
+test:
+  script:
+    - npm test
+
+deploy:
+  script:
+    - echo tbd
