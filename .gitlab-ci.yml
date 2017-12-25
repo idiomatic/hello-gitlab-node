@@ -20,4 +20,5 @@ test:
 deploy:
   stage: deploy
   script:
-    - echo tbd
+    - docker build -t registry.gitlab.com/rbrian/hello-node .
+    - docker push registry.gitlab.com/rbrian/hello-node
