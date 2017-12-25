@@ -40,8 +40,8 @@ staging:
     name: staging
     url: http://staging.example.com/
   before_script:
-    - [ -z "$AWS_ACCESS_KEY" ] && { echo AWS_ACCESS_KEY missing; exit 1; }
-    - [ -z "$AWS_SECRET_ACCESS_KEY" ] && { echo AWS_SECRET_ACCESS_KEY missing; exit 1; }
+    - '[ -z "$AWS_ACCESS_KEY" ] && { echo AWS_ACCESS_KEY missing; exit 1; }'
+    - '[ -z "$AWS_SECRET_ACCESS_KEY" ] && { echo AWS_SECRET_ACCESS_KEY missing; exit 1; }'
   script:
     - aws --version
     - aws ecs deploy
