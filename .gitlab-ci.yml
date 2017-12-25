@@ -29,24 +29,27 @@ test:
 
 staging:
   stage: staging
-  image: anigeo/awscli
+  image:
+    name: anigeo/awscli
+    entrypoint: ["/bin/bash"]
   environment:
     name: staging
     url: http://staging.example.com/
   script:
-    - --version
-    - configure
+    - aws --version
+    - aws configure
   only:
     - master
 
 production:
   stage: deploy
-  image: anigeo/awscli
+    name: anigeo/awscli
+    entrypoint: ["/bin/bash"]
   environment:
     name: production
     url: https://example.com/
   script:
-    - help
+    - aws help
   when: manual
   only:
     - master
