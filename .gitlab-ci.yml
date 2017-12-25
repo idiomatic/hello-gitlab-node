@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - push
+  - publish
   - staging
   - deploy
 
@@ -31,8 +31,8 @@ test:
   script:
     - npm test
 
-push:
-  stage: push
+publish:
+  stage: publish
   image: docker
   services:
     - docker:dind
