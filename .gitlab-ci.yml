@@ -1,16 +1,12 @@
-services:
-  - redis
-
-cache:
-  paths:
-    - node_modules/
-    - /var/lib/docker
-
 stages:
   - build
   - test
   - staging
   - deploy
+
+cache:
+  paths:
+    - /var/lib/docker
 
 build:
   stage: build
@@ -38,6 +34,7 @@ staging:
     name: staging
     url: http://staging.example.com/
   script:
+    - echo hello...
     - env | sort
     - which aws || true
     - aws configure
