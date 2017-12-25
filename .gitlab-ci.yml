@@ -8,16 +8,10 @@ cache:
     - node_modules/
 
 stages:
-  - test
   - build
+  - test
   - staging
   - deploy
-
-test:
-  stage: test
-  script:
-    - npm install
-    - npm test
 
 build:
   stage: build
@@ -25,12 +19,17 @@ build:
   services:
     - docker:dind
   script:
-    - docker info
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
   only:
     - master
+
+test:
+  stage: test
+  image: $CI_REGISTRY_IMAGE
+  script:
+    - npm test
 
 staging:
   stage: staging
@@ -39,7 +38,7 @@ staging:
     name: staging
     url: http://staging.example.com/
   script:
-    - which aws || true
+    - aws help
   only:
     - master
 
@@ -50,7 +49,7 @@ deploy:
     name: production
     url: https://example.com/
   script:
-    - which aws || true
+    - aws help
   when: manual
   only:
     - master
