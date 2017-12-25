@@ -11,9 +11,9 @@ stages:
   - test
   - deploy
 
-
 test:
   script:
+    - npm install
     - npm test
 
 deploy:
