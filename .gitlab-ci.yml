@@ -21,7 +21,7 @@ test:
 
 build:
   stage: build
-  image: docker:latest
+  image: docker:dind
   script:
     - export DOCKER_HOST=tcp://localhost:2375
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
