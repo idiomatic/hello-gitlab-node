@@ -12,10 +12,12 @@ stages:
   - deploy
 
 test:
+  stage: test
   script:
     - npm install
     - npm test
 
 deploy:
+  stage: deploy
   script:
     - echo tbd
