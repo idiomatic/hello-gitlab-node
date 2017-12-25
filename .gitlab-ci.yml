@@ -7,14 +7,19 @@ cache:
   paths:
   - node_modules/
 
-test:
-  script:
-   - npm install
-   - npm test
+stages:
+  - build
+  - test
+  - deploy
 
 build:
   script:
+    - npm install
     - echo create container
+
+test:
+  script:
+    - echo run node test.js in container
 
 deploy:
   script:
