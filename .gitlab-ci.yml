@@ -38,11 +38,11 @@ staging:
   script:
     - env | sort
     - which aws || true
-    - aws ecs help
+    - aws configure
   only:
     - master
 
-deploy:
+production:
   stage: deploy
   image: cgswong/aws:aws
   environment:
