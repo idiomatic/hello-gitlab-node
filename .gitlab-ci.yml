@@ -1,6 +1,7 @@
-image: node:latest
+image: docker:latest
 
 services:
+  - docker:dind
   - redis:latest
 
 cache:
@@ -14,12 +15,12 @@ stages:
 
 build:
   script:
-    - npm install
-    - echo create container
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
 
 test:
   script:
-    - echo run node test.js in container
+    - docker exec $CI_REGISTRY_IMAGE node test.js
 
 deploy:
   script:
