@@ -20,7 +20,7 @@ build:
 
 test:
   script:
-    - docker exec $CI_REGISTRY_IMAGE node test.js
+    - docker exec $CI_REGISTRY_IMAGE npm test
 
 deploy:
   script:
