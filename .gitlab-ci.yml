@@ -34,10 +34,8 @@ staging:
     name: staging
     url: http://staging.example.com/
   script:
-    - echo hello...
-    - env | sort
-    - which aws || true
-    - aws configure
+    - --version
+    - configure
   only:
     - master
 
@@ -48,7 +46,7 @@ production:
     name: production
     url: https://example.com/
   script:
-    - aws help
+    - help
   when: manual
   only:
     - master
