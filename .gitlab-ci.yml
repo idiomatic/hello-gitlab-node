@@ -1,0 +1,16 @@
+image: node:latest
+
+services:
+  - mysql:latest
+  - redis:latest
+  - postgres:latest
+
+cache:
+  paths:
+  - node_modules/
+
+test:
+  script:
+   - npm install
+   - node test.js
+ 
