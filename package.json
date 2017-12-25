@@ -1,6 +1,13 @@
 {
   "main": "main.js",
   "name": "hello-node",
+  "description": "trivial node webserver on gitlab.com",
+  "version": "0.0.1",
+  "licence": "MIT",
+  "dependencies": {
+    "koa": "^2.4.0",
+    "koa-static": "^4.0.0"
+  },
   "scripts": {
     "start": "node main.js",
     "test": "node test.js"
