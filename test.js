@@ -7,5 +7,6 @@ http.get('http://localhost:8000', (resp) => {
         console.assert(data == "aloha\n", "wrong body")
     })
 }).on("error", (err) => {
+    console.log(err)
     console.assert(!err, "spurious error")
 })
