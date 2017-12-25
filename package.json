@@ -1,0 +1,8 @@
+{
+  "main": "main.js",
+  "name": "hello-node",
+  "scripts": {
+    "start": "node main.js",
+    "test": "node test.js"
+  }
+}
