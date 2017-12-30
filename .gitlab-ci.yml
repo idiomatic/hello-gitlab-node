@@ -33,6 +33,7 @@ test:
   services:
     - cassandra
   script:
+    - npm install --only=dev
     - npm test
 
 # WIP
