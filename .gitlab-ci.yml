@@ -33,8 +33,6 @@ test:
   services:
     - cassandra
   script:
-    - cat /etc/hosts
-    - ping cassandra
     - npm test
 
 # WIP
