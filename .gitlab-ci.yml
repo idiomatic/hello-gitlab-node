@@ -11,7 +11,6 @@ variables:
 
 build:
   stage: build
-  image: docker
   script:
     - mount
     - env | sort
@@ -28,7 +27,6 @@ test:
 
 publish:
   stage: publish
-  image: docker
   before_script:
     - '[ -z "$AWS_ACCOUNT_ID" ] && { echo AWS_ACCOUNT_ID missing; exit 1; }'
   script:
