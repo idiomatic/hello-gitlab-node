@@ -33,9 +33,6 @@ test:
   services:
     - cassandra
   script:
-    - ls
-    - npm install --only=dev
-    - ls node_modules
     - npm test
 
 # WIP
