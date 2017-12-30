@@ -9,11 +9,18 @@ variables:
   AWS_DEFAULT_REGION: us-west-2
   AWS_REGISTRY_IMAGE: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CI_PROJECT_NAME:$CI_BUILD_REF_SLUG
 
-build:
-  stage: build
+diagnostic:
   script:
     - mount
     - env | sort
+    
+build:
+  stage: build
+  image: docker
+  # runner should mount docker.sock instead of services: docker:dind
+  services:
+    - docker:dind
+  script:
     - docker info
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE .
@@ -27,10 +34,12 @@ test:
 
 publish:
   stage: publish
+  image: docker
+  services:
+    - docker:dind
   before_script:
     - '[ -z "$AWS_ACCOUNT_ID" ] && { echo AWS_ACCOUNT_ID missing; exit 1; }'
   script:
-    - env | sort
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE
     - docker push $AWS_REGISTRY_IMAGE
