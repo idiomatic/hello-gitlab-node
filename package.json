@@ -7,7 +7,7 @@
   "repository": "https://gitlab.com/rbrian/hello-gitlab-node.git",
   "dependencies": {
     "koa": "^2",
-    "koa-route": "^3",
+    "koa-router": "^7",
     "koa-static": "^4",
     "cassandra-driver": "^3"
   },

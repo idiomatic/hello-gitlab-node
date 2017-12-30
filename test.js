@@ -19,3 +19,22 @@ scenario({
         (res, t) => t.equal(res.status, 200),
         (res, t) => t.equal(res.text, JSON.stringify({ message:'aloha' }))
     ]})
+
+scenario({
+    title: 'GET /ping',
+    path: '/ping',
+    method: 'get',
+    assertions: [
+        (res, t) => t.equal(res.status, 200),
+        (res, t) => t.equal(res.text, 'local')
+    ]})
+
+scenario({
+    title: 'GET /shutdown',
+    path: '/shutdown',
+    method: 'get'
+})
+
+
+
+
