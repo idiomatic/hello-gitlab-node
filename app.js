@@ -11,9 +11,13 @@ const db = new cassandra.Client({
 app.use(serve("public"))
 
 app.use(route.get('/hello.json', async (ctx) => {
-    let err, result = await db.execute('describe keyspaces')
-    console.log(err, result)
     ctx.body = { message: 'aloha' }
+}))
+
+app.use(route.get('/ping', async (ctx) => {
+    let err, result = await db.execute('describe keyspaces')
+    if (err) console.error(err)
+    ctx.body = result
 }))
 
 if (!module.parent) app.listen(8000)
