@@ -1,4 +1,6 @@
 stages:
+  - diagnostic
+  - setup
   - build
   - test
   - publish
@@ -9,19 +11,30 @@ variables:
   AWS_DEFAULT_REGION: us-west-2
   AWS_REGISTRY_IMAGE: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CI_PROJECT_NAME:$CI_BUILD_REF_SLUG
 
+cache:
+  paths:
+    - node_modules
+
 diagnostic:
   script:
     - mount
     - env | sort
     
+setup:
+  stage: setup
+  image: node
+  script:
+    - npm install
+
 build:
   stage: build
   image: docker
   # runner should mount docker.sock instead of services: docker:dind
   services:
     - docker:dind
-  script:
+  before_script:
     - docker info
+  script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
@@ -32,7 +45,8 @@ test:
   script:
     - npm test
 
-publish:
+# WIP
+publish_aws:
   stage: publish
   image: docker
   services:
@@ -44,7 +58,8 @@ publish:
     - docker pull $CI_REGISTRY_IMAGE
     - docker push $AWS_REGISTRY_IMAGE
 
-staging:
+# WIP
+staging_aws:
   stage: staging
   image:
     name: anigeo/awscli
@@ -61,7 +76,8 @@ staging:
   only:
     - master
 
-production:
+# WIP
+deploy_aws:
   stage: deploy
   image:
     name: anigeo/awscli
