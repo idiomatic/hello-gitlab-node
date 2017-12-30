@@ -1,14 +1,15 @@
 {
   "main": "app.js",
-  "name": "hello-node",
+  "name": "hello-gitlab-node",
   "description": "trivial node webserver on gitlab.com",
   "version": "0.0.1",
   "license": "MIT",
-  "repository": "https://gitlab.com/rbrian/hello-node.git",
+  "repository": "https://gitlab.com/rbrian/hello-gitlab-node.git",
   "dependencies": {
-    "koa": "^2.4.0",
-    "koa-route": "^3.0.0",
-    "koa-static": "^4.0.0"
+    "koa": "^2",
+    "koa-route": "^3",
+    "koa-static": "^4",
+    "cassandra-driver": "^3"
   },
   "devDependencies": {
     "koa-test": "^0"

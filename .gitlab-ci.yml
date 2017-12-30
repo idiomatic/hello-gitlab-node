@@ -1,6 +1,9 @@
+# container-centric node webapp pipeline
+# 1. builds and pushes a container
+# 2. tests using "dev artifacts" npm, package.json, and test.js
+# 3. re-pushes container to cloud
+
 stages:
-  #- diagnostic
-  - setup
   - build
   - test
   - publish
@@ -10,22 +13,6 @@ stages:
 variables:
   AWS_DEFAULT_REGION: us-west-2
   AWS_REGISTRY_IMAGE: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CI_PROJECT_NAME:$CI_BUILD_REF_SLUG
-
-cache:
-  paths:
-    - node_modules
-
-#diagnostic:
-#  stage: diagnostic
-#  script:
-#    - mount
-#    - env | sort
-    
-setup:
-  stage: setup
-  image: node
-  script:
-    - npm install
 
 build:
   stage: build
@@ -43,7 +30,11 @@ build:
 test:
   stage: test
   image: $CI_REGISTRY_IMAGE
+  services:
+    - cassandra
   script:
+    - cat /etc/hosts
+    - ping cassandra
     - npm test
 
 # WIP
