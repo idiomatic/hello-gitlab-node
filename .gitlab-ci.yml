@@ -34,7 +34,8 @@ test:
     - cassandra
   script:
     - pwd
-    - ls -lR /usr/src
+    - ls -lR
+    - cd /usr/src/app
     - npm install --only=dev
     - npm test
 
