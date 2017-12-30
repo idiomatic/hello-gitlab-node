@@ -37,8 +37,9 @@ test:
   services:
     - cassandra
   script:
-    - sleep 30
+    - sleep 5
     - cd /usr/src/app
+    - [ ! -d node_modules/koa-test ]
     - npm install --only=dev
     - npm test
 
