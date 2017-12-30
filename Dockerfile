@@ -6,8 +6,6 @@ COPY package.json .
 
 RUN npm install && npm cache clean --force
 
-RUN ls -R
-
 COPY . .
 
 CMD [ "npm", "start" ]
