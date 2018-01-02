@@ -1,12 +1,10 @@
 # container-centric node webapp CI/CD pipeline
 # 1. builds and pushes a container
 # 2. tests using "dev artifacts" npm, package.json, and test.js
-# 3. re-pushes container to cloud
 
 stages:
   - build
   - test
-  - containerize
   - staging
   - deploy
 
@@ -26,7 +24,7 @@ build:
     - docker info
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF -t $CI_REGISTRY_IMAGE:latest .
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF -t $CI_REGISTRY_IMAGE:latest .
     - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF
     - docker push $CI_REGISTRY_IMAGE:latest
 
@@ -41,6 +39,7 @@ test:
     # hack to wait for cassandra
     - sleep 5
     - cd /usr/src/app
+    # hack to add testing modules
     - npm install --only=dev
     - npm test
 
@@ -56,6 +55,10 @@ staging_aws:
     name: staging
     url: http://staging.example.com/
   before_script:
+    - which aws || true
+    - which aws-cli || true
+    - which ecs || true
+    - which ecs-cli || true
     - '[ -z "$AWS_ACCESS_KEY" ] && { echo AWS_ACCESS_KEY missing; exit 1; }'
     - '[ -z "$AWS_SECRET_ACCESS_KEY" ] && { echo AWS_SECRET_ACCESS_KEY missing; exit 1; }'
   script:
