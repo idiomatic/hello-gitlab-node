@@ -1,4 +1,4 @@
-# container-centric node webapp pipeline
+# container-centric node webapp CI/CD pipeline
 # 1. builds and pushes a container
 # 2. tests using "dev artifacts" npm, package.json, and test.js
 # 3. re-pushes container to cloud
@@ -19,8 +19,8 @@ variables:
 build:
   stage: build
   image: docker
-  # runner should mount docker.sock instead of services: docker:dind
   services:
+    # runner should mount docker.sock instead of services: docker:dind
     - docker:dind
   variables:
     GIT_STRATEGY: fetch
@@ -39,7 +39,6 @@ test:
   script:
     - sleep 5
     - cd /usr/src/app
-    - ls node_modules
     - npm install --only=dev
     - npm test
 
