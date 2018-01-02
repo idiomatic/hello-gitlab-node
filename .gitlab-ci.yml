@@ -6,22 +6,17 @@
 stages:
   - build
   - test
-  - publish
+  - containerize
   - staging
   - deploy
 
 variables:
-  # omit repo checkout on most stages
-  GIT_STRATEGY: none
   AWS_DEFAULT_REGION: us-west-2
   AWS_REGISTRY_IMAGE: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$CI_PROJECT_NAME:$CI_BUILD_REF_SLUG
 
 build:
   stage: build
-  image: docker
-  services:
-    # runner should mount docker.sock instead of services: docker:dind
-    - docker:dind
+  image: docker:dind
   variables:
     GIT_STRATEGY: fetch
   before_script:
@@ -34,28 +29,17 @@ build:
 
 test:
   stage: test
-  image: $CI_REGISTRY_IMAGE
+  image: $CI_REGISTRY_IMAGE:$CI_BUILD_REF
+  variables:
+    GIT_STRATEGY: none
   services:
     - cassandra
   script:
+    # hack to wait for cassandra
     - sleep 5
     - cd /usr/src/app
     - npm install --only=dev
     - npm test
-
-# WIP
-publish_aws:
-  stage: publish
-  image: docker
-  services:
-    - docker:dind
-  before_script:
-    - '[ -z "$AWS_ACCOUNT_ID" ] && { echo AWS_ACCOUNT_ID missing; exit 1; }'
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE
-    - docker push $AWS_REGISTRY_IMAGE
-  when: manual
 
 # WIP
 staging_aws:
@@ -63,6 +47,8 @@ staging_aws:
   image:
     name: anigeo/awscli
     entrypoint: ["/bin/sh", "-c"]
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: staging
     url: http://staging.example.com/
@@ -82,6 +68,8 @@ deploy_aws:
   image:
     name: anigeo/awscli
     entrypoint: ["/bin/sh", "-c"]
+  variables:
+    GIT_STRATEGY: none
   environment:
     name: production
     url: https://example.com/
