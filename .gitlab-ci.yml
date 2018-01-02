@@ -16,7 +16,10 @@ variables:
 
 build:
   stage: build
-  image: docker:dind
+  image: docker
+  services:
+    # runner should mount docker.sock instead of services: docker:dind
+    - docker:dind
   variables:
     GIT_STRATEGY: fetch
   before_script:
